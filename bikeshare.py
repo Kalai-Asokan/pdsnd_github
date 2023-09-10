@@ -81,7 +81,7 @@ def get_filters():
 def load_data(city, month, day):
     """
     Loads data for the specified city and filters by month and day if applicable.
-
+        
     Args:
         (str) city - name of the city to analyze
         (str) month - name of the month to filter by, or "all" to apply no month filter
@@ -89,6 +89,40 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
+    df = pd.read_csv(CITY_DATA[city])
+    # extract month and day of week from Start Time to create new columns
+    df['Start Time'] = pd.to_datetime(df['Start Time'])
+    df['month'] = df['Start Time'].dt.month
+    df['day_of_week'] = df['Start Time'].dt.day_name()
+    df['start_hour'] = df['Start Time'].dt.hour
+    # filter by month if applicable
+    if month != 'All':
+    # use the index of the months list to get the corresponding int
+        month = Months.index(month) + 1
+        df = df[df['month'] == month]
+    if day != 'All':
+        df = df[df['day_of_week'] == day.title()]
+    return df
+
+
+def time_stats(df):
+    """Displays statistics on the most frequent times of travel."""
+
+    print('\nCalculating The Most Frequent Times of Travel...\n')
+    start_time = time.time()
+    modes = df.mode()
+    # display the most common month  \
+    most_common_month = int(modes['month'][0])  
+    print("The most common month is: ", Months[most_common_month-1])
+
+    # display the most common day of week
+    print("The most common day of week is: ", modes['day_of_week'][0])
+
+    # display the most common start hour
+    print("The most common start hour is: ", int(modes['start_hour'][0]))
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
 
 
     return df
