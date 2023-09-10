@@ -16,6 +16,55 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('Hello! Let\'s explore some US bikeshare data!')
+        """
+    Asks user to specify a city, month, and day to analyze.
+
+    Returns:
+        (str) city - name of the city to analyze
+        (str) month - name of the month to filter by, or "all" to apply no month filter
+        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+    """
+    print('Hello! Let\'s explore some US bikeshare data!\n')
+    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
+    valid_city = False
+    valid_month = False
+    valid_day = False
+
+    while not valid_city:
+
+        city = input("Would you like to see the data for Chicago, New York or Washington?\n").title()
+
+        if city == 'Chicago'  or city == 'New York' or city == 'Washington':
+            valid_city = True
+        else :
+            print("That's an invalid input. Let\'s try again.\n") 
+
+    while not valid_month:
+    # get user input for month (all, january, february, ... , june)
+        month_filter = input("Would you like to filter data by month? Type \"yes\" or \"no\"\n").title()
+
+        if month_filter == "Yes":    
+            month = input("Which month? January, February, March, April, May or June?\n").title()
+            valid_month = True
+            
+        elif month_filter == "No":
+            print("\nOkay. Will show data for all months.\n")
+            valid_month = True
+            month = "All"    
+            
+        else :
+            print("\nThat's an invalid input. Let\'s try again.\n")   
+        
+    while not valid_day:
+    # get user input for day of week (all, monday, tuesday, ... sunday)
+        day = input("\nWhich day of the week would you like to filter by? Type \"All\" if you want to see data for all days \n").title()
+
+        if day == "Monday" or day == "Tuesday" or day == "Wednesday" or day == "Thursday" or day == "Friday" or day == "Saturday" or day == "Sunday" or day == "All":    
+            valid_day = True
+            
+        else :
+            print("\nThat's an invalid input. Let\'s try again.\n")   
+    return city, month, day
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
 
 
